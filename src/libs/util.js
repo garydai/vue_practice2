@@ -268,6 +268,4 @@ util.checkUpdate = function (vm) {
     });
 };
 
-var urlPrefix = '/ecreditpal/rest/shanganbao'
-
 export default util;

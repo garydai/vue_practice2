@@ -20,6 +20,11 @@
                         <Icon type="navicon" size="32"></Icon>
                     </Button>
                 </div>
+                <div class="header-middle-con">
+                    <div class="main-breadcrumb">
+                        <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
+                    </div>
+                </div>
                 <div class="header-avator-con">
                     <div class="user-dropdown-menu-con">
                         <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
@@ -37,6 +42,9 @@
                     </div>
                 </div>
             </div>
+            <!--<div class="tags-con">
+                <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
+            </div>-->
         </div>
         <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
             <div class="single-page">
@@ -46,12 +54,17 @@
     </div>
 </template>
 <script>
-import Cookies from 'js-cookie';
-import shrinkableMenu from './main-components/shrinkable-menu/shrinkable-menu.vue';
+import Cookies from 'js-cookie'
+import shrinkableMenu from './main-components/shrinkable-menu/shrinkable-menu.vue'
+import tagsPageOpened from './main-components/tags-page-opened.vue'
+import breadcrumbNav from './main-components/breadcrumb-nav.vue'
+import util from '@/libs/util.js'
 
 export default {
     components: {
-        shrinkableMenu
+        shrinkableMenu,
+        tagsPageOpened,
+        breadcrumbNav
     },
     data () {
         return {
@@ -61,12 +74,21 @@ export default {
     },
     computed: {
         menuList () {
-            return this.$store.state.app.menuList;
-        }
+            return this.$store.state.app.menuList
+        },     
+        pageTagsList () {
+            return this.$store.state.app.pageOpenedList // 打开的页面的页面对象
+        },
+        currentPath () {
+            return this.$store.state.app.currentPath // 当前面包屑数组
+        },
     },
     methods: {
         init () {
             this.userName = Cookies.get('user');
+            console.log(this.$route.name)
+            let pathArr = util.setCurrentPath(this, this.$route.name);
+            
         },
         toggleClick () {
             this.shrink = !this.shrink;
@@ -77,8 +99,22 @@ export default {
             });
         }
     },
+    watch: {
+        '$route' (to) {
+            this.$store.commit('setCurrentPageName', to.name);
+            let pathArr = util.setCurrentPath(this, to.name);
+            if (pathArr.length > 2) {
+                this.$store.commit('addOpenSubmenu', pathArr[1].name);
+            }
+          //  this.checkTag(to.name);
+            localStorage.currentPageName = to.name;
+        }
+    },
     mounted () {
         this.init();
+    },
+    created () {
+        this.$store.commit('setOpenedList');
     }
 };
 </script>
