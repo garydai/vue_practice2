@@ -44,7 +44,7 @@ export const otherRouter = {
     redirect: '/home',
     component: Main,
     children: [
-        { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: resolve => { require(['@/views/home/home.vue'], resolve); } }
+        { path: 'home', title: {i18n: '首页'}, name: 'home_index', component: resolve => { require(['@/views/home/home.vue'], resolve); } }
     ]
 };
 
@@ -60,8 +60,8 @@ export const appRouter = [
             {
                 path: 'list',
                 icon: 'ios-paper-outline',
-                name: 'list',
-                title: 'list',
+                name: 'list_index',
+                title: {i18n: '账单'},
                 component: resolve => { require(['@/views/bill/list/list.vue'], resolve); }
             }
         ]

@@ -42,9 +42,9 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="tags-con">
+            <div class="tags-con">
                 <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
-            </div>-->
+            </div>
         </div>
         <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
             <div class="single-page">
@@ -85,10 +85,22 @@ export default {
     },
     methods: {
         init () {
-            this.userName = Cookies.get('user');
-            console.log(this.$route.name)
-            let pathArr = util.setCurrentPath(this, this.$route.name);
-            
+            this.userName = Cookies.get('user')
+            let pathArr = util.setCurrentPath(this, this.$route.name)         
+            console.log(pathArr)
+            if (pathArr.length >= 2) {
+                this.$store.commit('addOpenSubmenu', pathArr[1].name)
+            }
+        },
+        checkTag (name) {
+            let openpageHasTag = this.pageTagsList.some(item => {
+                if (item.name === name) {
+                    return true;
+                }
+            });
+            if (!openpageHasTag) { //  解决关闭当前标签后再点击回退按钮会退到当前页时没有标签的问题
+                util.openNewPage(this, name, this.$route.params || {}, this.$route.query || {});
+            }
         },
         toggleClick () {
             this.shrink = !this.shrink;
@@ -101,12 +113,14 @@ export default {
     },
     watch: {
         '$route' (to) {
-            this.$store.commit('setCurrentPageName', to.name);
-            let pathArr = util.setCurrentPath(this, to.name);
+            this.$store.commit('setCurrentPageName', to.name)
+            let pathArr = util.setCurrentPath(this, to.name)
+            console.log(888)
+            console.log(pathArr[1].name)
             if (pathArr.length > 2) {
                 this.$store.commit('addOpenSubmenu', pathArr[1].name);
             }
-          //  this.checkTag(to.name);
+            this.checkTag(to.name);
             localStorage.currentPageName = to.name;
         }
     },
