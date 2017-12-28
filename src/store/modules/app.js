@@ -83,6 +83,31 @@ const app = {
             state.pageOpenedList.splice(get.index, 1, openedPage);
             localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
         },
+        clearAllTags (state) {
+            state.pageOpenedList.splice(1);
+            state.cachePage.length = 0;
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+        },
+        clearOtherTags (state, vm) {
+            let currentName = vm.$route.name;
+            let currentIndex = 0;
+            state.pageOpenedList.forEach((item, index) => {
+                if (item.name === currentName) {
+                    currentIndex = index;
+                }
+            });
+            if (currentIndex === 0) {
+                state.pageOpenedList.splice(1);
+            } else {
+                state.pageOpenedList.splice(currentIndex + 1);
+                state.pageOpenedList.splice(1, currentIndex - 1);
+            }
+            let newCachepage = state.cachePage.filter(item => {
+                return item === currentName;
+            });
+            state.cachePage = newCachepage;
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+        },
     }
 };
 

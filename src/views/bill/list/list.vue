@@ -31,7 +31,8 @@
                 params: {
                     phone: "13968084799",
                     token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFuZ2FuYmFvIiwiaXNzIjoiZWNyZWR0aXBhbCIsImNsYWltIjoiMTM5NjgwODQ3OTkiLCJleHAiOjE1MTU1NjY5Mjd9.Em5zb_R3UMzVqB4rTSPNCOZ_yfqQEpOV8BBtplKGnJ0"
-                }
+                },
+                count: 100
             }
         },
         created() {
