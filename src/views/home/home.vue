@@ -87,7 +87,7 @@
                 过去7天数据
             </p>
             <div class="line-chart-con">
-                <users></users>
+                <staticticsChart></staticticsChart>
             </div>
         </Card>
     </Row>
@@ -98,13 +98,13 @@
 import inforCard from './components/inforCard.vue'
 import summaryApi from '@/api/summary'
 import {formatDate} from '@/libs/date.js';
-import users from './components/users.vue';
+import staticticsChart from './components/staticticsChart.vue';
 
 export default {
     name: 'home',
     components: {
         inforCard,
-        users
+        staticticsChart
     },
     data () {
         return {
