@@ -86,7 +86,7 @@ export default {
     methods: {
         fetch () {
             var now = new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000);
-            var startTime = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            var startTime = new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000);
             const start = formatDate(startTime, "yyyy-MM-dd")
             const end = formatDate(now, "yyyy-MM-dd")
             summaryApi.summary({'start_time': start, 'end_time': end}).then((resp) => {
