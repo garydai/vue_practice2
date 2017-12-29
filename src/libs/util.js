@@ -12,10 +12,10 @@ util.title = function (title) {
 };
 
 const ajaxUrl = env === 'development'
-    ? 'http://10.10.10.200:18080/ecreditpal/rest/shanganbao'
+    ? 'http://10.10.10.100:2777/jifu/shanganbao'
     : env === 'production'
-    ? 'http://10.10.10.200:18080/ecreditpal/rest/shanganbao'
-    : 'http://10.10.10.200:18080/ecreditpal/rest/shanganbao';
+    ? 'http://10.10.10.100:2777/jifu/shanganbao'
+    : 'http://10.10.10.100:2777/jifu/shanganbao';
 
 util.axios = axios.create({
     baseURL: ajaxUrl,

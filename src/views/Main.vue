@@ -8,7 +8,7 @@
                 :shrink="shrink"
                 :menu-list="menuList">
                 <div slot="top" class="logo-con">
-                    <img v-show="!shrink"  src="../images/logo.jpg" key="max-logo" />
+                    <img v-show="!shrink"  src="../images/logo-min.jpg" key="max-logo" />
                     <img v-show="shrink" src="../images/logo-min.jpg" key="min-logo" />
                 </div>
             </shrinkable-menu>
@@ -42,9 +42,9 @@
                     </div>
                 </div>
             </div>
-            <div class="tags-con">
+            <!--<div class="tags-con">
                 <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
-            </div>
+            </div>-->
         </div>
         <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
             <div class="single-page">

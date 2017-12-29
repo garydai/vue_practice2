@@ -61,19 +61,16 @@ export const appRouter = [
                 path: 'list',
                 icon: 'ios-paper-outline',
                 name: 'list_index',
-                title: {i18n: '账单'},
-                component: resolve => { require(['@/views/bill/list/list.vue'], resolve); }
+                title: '账单',
+                component: resolve => { require(['@/views/bill/list.vue'], resolve); }
+            },
+            {
+                path: 'page',
+                icon: 'ios-paper-outline',
+                name: 'page_index',
+                title: 'page',
+                component: resolve => { require(['@/views/bill/page.vue'], resolve); }
             }
-        ]
-    },
-    {
-        path: '/page',
-        icon: 'ios-paper',
-        title: 'Page',
-        name: 'page',
-        component: Main,
-        children: [
-            { path: 'index', title: 'Page', name: 'page_index', component: resolve => { require(['@/views/page/page.vue'], resolve); } }
         ]
     }
 ];
