@@ -81,16 +81,27 @@
             </Col>
         </Row>
         <Row class="margin-top-10">
-        <Card>
-            <p slot="title" class="card-title">
-                <Icon type="ios-shuffle-strong"></Icon>
-                过去7天数据
-            </p>
-            <div class="line-chart-con">
-                <staticticsChart></staticticsChart>
-            </div>
-        </Card>
-    </Row>
+            <Card>
+                <p slot="title" class="card-title">
+                    <Icon type="ios-shuffle-strong"></Icon>
+                    过去7天数据
+                </p>
+                <div class="line-chart-con">
+                    <staticticsChart></staticticsChart>
+                </div>
+            </Card>
+        </Row>
+        <Row class="margin-top-10">
+            <Card>
+                <p slot="title" class="card-title">
+                    <Icon type="ios-shuffle-strong"></Icon>
+                    今日借款平台统计
+                </p>
+                <div class="data_source_con" :style="{height: '300px'}">
+                    <platformPie></platformPie>
+                </div>
+            </Card>
+        </Row>
     </div>
 </template>
 
@@ -99,12 +110,14 @@ import inforCard from './components/inforCard.vue'
 import summaryApi from '@/api/summary'
 import {formatDate} from '@/libs/date.js';
 import staticticsChart from './components/staticticsChart.vue';
+import platformPie from './components/platformPie.vue';
 
 export default {
     name: 'home',
     components: {
         inforCard,
-        staticticsChart
+        staticticsChart,
+        platformPie
     },
     data () {
         return {
@@ -125,13 +138,6 @@ export default {
         fetch() {
             const date = formatDate(new Date(), "yyyy-MM-dd");
             summaryApi.summary({'start_time': date, 'end_time': date}).then((resp) => {
-                // "register_count_today": "493",
-                // "bill_completed_count_today": "284",
-                // "bill_count_today": "455",
-                // "time": "2017-12-28",
-                // "wechat_follow_count_by_now": "182",
-                // "apply_bill_count_today": "406",
-                // "apply_count_today": "173"
                 if(resp.data.code == 200 && resp.data.report && resp.data.report.length > 0){
                     var report = resp.data.report[0]
                     this.count.registerCountToday = report.register_count_today
