@@ -1,5 +1,5 @@
 <template>
-    <div style="width:100%;height:100%;" id="data_source_con"></div>
+    <div style="width:100%;height:100%;" id="data_source_con7days"></div>
 </template>
 
 <script>
@@ -8,11 +8,11 @@ import {formatDate} from '@/libs/date.js'
 import summaryApi from '@/api/summary'
 
 export default {
-    name: 'platformPie',
+    name: 'platformPie7days',
     data () {
         return {
             scource: [],
-            
+            title: []
         }
     },
     mounted () {
@@ -22,21 +22,36 @@ export default {
     },
     methods: {
         fetch () {
-            const date = formatDate(new Date(), "yyyy-MM-dd");
-            summaryApi.platform({'start_time': date, 'end_time': date}).then((resp) => {
+            var now = new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000);
+            var startTime = new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000);
+            const start = formatDate(startTime, "yyyy-MM-dd")
+            const end = formatDate(now, "yyyy-MM-dd")
+            summaryApi.platform({'start_time': start, 'end_time': end}).then((resp) => {
                 if(resp.data.code == 200 && resp.data.report && resp.data.report.length > 0){
-                    var data = resp.data.report[0].data
                     var source = []
-                    data.forEach(function(ele) {
-                        source.push({value: ele.bill_count, name: ele.platform})
+                    var map = {}
+                    resp.data.report.forEach(function(element) {
+                        var data = element.data
+                        data.forEach(function(ele) {
+                            if(ele.platform in map){
+                                map[ele.platform] += 1
+                            }
+                            else {
+                                map[ele.platform] = 0
+                            }
+                        }, this);
+                        this.source = source
                     }, this);
+                    for(var key in map){
+                        source.push({value: map[key], name: key})
+                    }
                     this.source = source
                     this.render()
                 }
             })
         },
         render () {
-            var dataSourcePie = echarts.init(document.getElementById('data_source_con'));
+            var dataSourcePie = echarts.init(document.getElementById('data_source_con7days'));
             const option = {
                 tooltip: {
                     trigger: 'item',
@@ -79,7 +94,6 @@ export default {
             window.addEventListener('resize', function () {
                 dataSourcePie.resize()
             })
-
         }
     }
 };

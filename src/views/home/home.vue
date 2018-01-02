@@ -97,8 +97,19 @@
                     <Icon type="ios-shuffle-strong"></Icon>
                     今日借款平台统计
                 </p>
-                <div class="data_source_con" :style="{height: '300px'}">
+                <div class="data_source_con" :style="{height: '500px'}">
                     <platformPie></platformPie>
+                </div>
+            </Card>
+        </Row>
+        <Row class="margin-top-10">
+            <Card>
+                <p slot="title" class="card-title">
+                    <Icon type="ios-shuffle-strong"></Icon>
+                    过去7天借款平台统计
+                </p>
+                <div class="data_source_con" :style="{height: '500px'}">
+                    <platformPie7days></platformPie7days>
                 </div>
             </Card>
         </Row>
@@ -111,13 +122,15 @@ import summaryApi from '@/api/summary'
 import {formatDate} from '@/libs/date.js';
 import staticticsChart from './components/staticticsChart.vue';
 import platformPie from './components/platformPie.vue';
+import platformPie7days from './components/platformPie7days.vue';
 
 export default {
     name: 'home',
     components: {
         inforCard,
         staticticsChart,
-        platformPie
+        platformPie,
+        platformPie7days
     },
     data () {
         return {
