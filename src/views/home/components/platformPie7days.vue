@@ -21,9 +21,12 @@ export default {
         })
     },
     methods: {
+        rank(a, b){  
+            return a.value - b.value  
+        },
         fetch () {
-            var now = new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000);
-            var startTime = new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000);
+            var now = new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000)
+            var startTime = new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000)
             const start = formatDate(startTime, "yyyy-MM-dd")
             const end = formatDate(now, "yyyy-MM-dd")
             summaryApi.platform({'start_time': start, 'end_time': end}).then((resp) => {
@@ -37,7 +40,7 @@ export default {
                                 map[ele.platform] += ele.bill_count
                             }
                             else {
-                                map[ele.platform] = 0
+                                map[ele.platform] = 1
                             }
                         }, this);
                     }, this);
@@ -50,7 +53,8 @@ export default {
             })
         },
         render () {
-            var dataSourcePie = echarts.init(document.getElementById('data_source_con7days'));
+            var dataSourcePie = echarts.init(document.getElementById('data_source_con7days'))
+            this.source.sort(this.rank)
             const option = {
                 tooltip: {
                     trigger: 'item',

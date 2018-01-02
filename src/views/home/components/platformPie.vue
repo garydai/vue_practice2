@@ -21,6 +21,9 @@ export default {
         })
     },
     methods: {
+        rank(a, b){  
+            return a.value - b.value  
+        },
         fetch () {
             const date = formatDate(new Date(), "yyyy-MM-dd");
             summaryApi.platform({'start_time': date, 'end_time': date}).then((resp) => {
@@ -31,6 +34,7 @@ export default {
                         source.push({value: ele.bill_count, name: ele.platform})
                     }, this);
                     this.source = source
+                    this.source.sort(this.rank)
                     this.render()
                 }
             })
