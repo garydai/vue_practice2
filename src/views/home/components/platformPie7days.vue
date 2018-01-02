@@ -34,13 +34,12 @@ export default {
                         var data = element.data
                         data.forEach(function(ele) {
                             if(ele.platform in map){
-                                map[ele.platform] += 1
+                                map[ele.platform] += ele.bill_count
                             }
                             else {
                                 map[ele.platform] = 0
                             }
                         }, this);
-                        this.source = source
                     }, this);
                     for(var key in map){
                         source.push({value: map[key], name: key})
